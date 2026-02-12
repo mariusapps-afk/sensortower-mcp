@@ -78,6 +78,37 @@ class SensorTowerTool:
         """Get authentication token"""
         return self.token
     
+    async def make_post_request(self, endpoint: str, json_body: Dict[str, Any], params: Optional[Dict[str, Any]] = None) -> Any:
+        """Make authenticated POST request to Sensor Tower API with retries and backoff."""
+        query_params = params or {}
+        query_params["auth_token"] = self.get_auth_token()
+        backoff_seconds = 0.5
+        max_attempts = 5
+        for attempt_index in range(max_attempts):
+            try:
+                response = await self.client.post(endpoint, params=query_params, json=json_body)
+                response.raise_for_status()
+                return response.json()
+            except httpx.HTTPStatusError as status_error:
+                status_code = status_error.response.status_code
+                if status_code in {429, 500, 502, 503, 504} and attempt_index < (max_attempts - 1):
+                    await asyncio.sleep(backoff_seconds)
+                    backoff_seconds = min(backoff_seconds * 2.0, 8.0)
+                    continue
+                try:
+                    body = status_error.response.json()
+                except Exception:
+                    body = status_error.response.text
+                raise ToolError(
+                    f"Sensor Tower API error {status_code} on {endpoint}: {body}"
+                ) from status_error
+            except (httpx.ReadTimeout, httpx.ConnectError):
+                if attempt_index < (max_attempts - 1):
+                    await asyncio.sleep(backoff_seconds)
+                    backoff_seconds = min(backoff_seconds * 2.0, 8.0)
+                    continue
+                raise
+
     async def make_request(self, endpoint: str, params: Dict[str, Any]) -> Any:
         """Make authenticated request to Sensor Tower API with retries and backoff."""
         params["auth_token"] = self.get_auth_token()

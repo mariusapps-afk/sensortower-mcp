@@ -15,7 +15,7 @@ from .config import (
 )
 from .tools import (
     AppAnalysisTools, StoreMarketingTools, MarketAnalysisTools,
-    YourMetricsTools, SearchDiscoveryTools, UtilityTools
+    YourMetricsTools, SearchDiscoveryTools, UtilityTools, CustomFieldsTools
 )
 from .documentation import register_documentation
 from .prompts import register_prompts
@@ -62,14 +62,16 @@ class SensorTowerMCPServer:
         market_analysis = MarketAnalysisTools(self.client, token)
         your_metrics = YourMetricsTools(self.client, token)
         search_discovery = SearchDiscoveryTools(self.client, token)
+        custom_fields = CustomFieldsTools(self.client, token)
         utilities = UtilityTools()
-        
+
         # Register tools with FastMCP
         app_analysis.register_tools(self.mcp)
         store_marketing.register_tools(self.mcp)
         market_analysis.register_tools(self.mcp)
         your_metrics.register_tools(self.mcp)
         search_discovery.register_tools(self.mcp)
+        custom_fields.register_tools(self.mcp)
         utilities.register_tools(self.mcp)
         
         # Register documentation resources

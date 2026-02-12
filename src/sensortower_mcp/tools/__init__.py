@@ -9,12 +9,14 @@ from .market_analysis import MarketAnalysisTools
 from .your_metrics import YourMetricsTools
 from .search_discovery import SearchDiscoveryTools
 from .utilities import UtilityTools
+from .custom_fields import CustomFieldsTools
 
 __all__ = [
     "AppAnalysisTools",
-    "StoreMarketingTools", 
+    "StoreMarketingTools",
     "MarketAnalysisTools",
     "YourMetricsTools",
     "SearchDiscoveryTools",
-    "UtilityTools"
+    "UtilityTools",
+    "CustomFieldsTools",
 ]
