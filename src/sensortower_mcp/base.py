@@ -125,7 +125,13 @@ class SensorTowerTool:
                     await asyncio.sleep(backoff_seconds)
                     backoff_seconds = min(backoff_seconds * 2.0, 8.0)
                     continue
-                raise
+                try:
+                    body = status_error.response.json()
+                except Exception:
+                    body = status_error.response.text
+                raise ToolError(
+                    f"Sensor Tower API error {status_code} on {endpoint}: {body}"
+                ) from status_error
             except (httpx.ReadTimeout, httpx.ConnectError):
                 if attempt_index < (max_attempts - 1):
                     await asyncio.sleep(backoff_seconds)
