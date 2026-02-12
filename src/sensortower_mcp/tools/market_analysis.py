@@ -24,8 +24,8 @@ class MarketAnalysisTools(SensorTowerTool):
         )
         async def get_top_and_trending(
             os: Annotated[
-                Literal["ios", "android", "unified"],
-                Field(description="Operating system scope"),
+                Literal["ios", "android"],
+                Field(description="Operating system. Use 'ios' or 'android' (unified is broken on this endpoint)."),
             ],
             comparison_attribute: Annotated[
                 Literal["absolute", "delta", "transformed_delta"],
@@ -79,7 +79,7 @@ class MarketAnalysisTools(SensorTowerTool):
         ) -> dict:
             """Get top apps by download or revenue estimates with growth metrics."""
 
-            os_value = validate_os_parameter(os, ["ios", "android", "unified"])
+            os_value = validate_os_parameter(os, ["ios", "android"])
             start_value = validate_date_format(date)
             end_value = validate_date_format(end_date) if end_date else None
 
