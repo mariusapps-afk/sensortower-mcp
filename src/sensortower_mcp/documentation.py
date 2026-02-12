@@ -93,7 +93,7 @@ def register_documentation(mcp: FastMCP):
         - **comparison_attribute**: "absolute", "delta", or "transformed_delta" for growth analysis
         - **time_range**: "day", "week", "month", "quarter", "year" for aggregation periods
         - **measure**: "units" (downloads), "revenue", "DAU", "WAU", "MAU" depending on endpoint
-        - **device_type**: "iphone", "ipad" for iOS (omit for all devices); leave blank for Android
+        - **device_type**: "total" (all devices), "iphone", "ipad" for iOS; leave blank for Android
         - **dates**: Format as YYYY-MM-DD
         - **data_model**: "DM_2025_Q2" (new model) or "DM_2025_Q1" (legacy)
         """
