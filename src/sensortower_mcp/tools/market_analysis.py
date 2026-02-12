@@ -49,8 +49,8 @@ class MarketAnalysisTools(SensorTowerTool):
                 Field(description="Comma-separated region codes"),
             ],
             device_type: Annotated[
-                Optional[Literal["iphone", "ipad", "total"]],
-                Field(description="Device filter", default=None),
+                Optional[Literal["iphone", "ipad"]],
+                Field(description="Device filter. Omit for all devices combined.", default=None),
             ] = None,
             end_date: Annotated[
                 Optional[str],
@@ -143,8 +143,8 @@ class MarketAnalysisTools(SensorTowerTool):
                 Field(description="Optional country code", default=None),
             ] = None,
             device_type: Annotated[
-                Optional[Literal["iphone", "ipad", "total"]],
-                Field(description="Device filter", default=None),
+                Optional[Literal["iphone", "ipad"]],
+                Field(description="Device filter. Omit for all devices combined.", default=None),
             ] = None,
             end_date: Annotated[
                 Optional[str],
@@ -266,8 +266,8 @@ class MarketAnalysisTools(SensorTowerTool):
                 Field(description="Category identifier", default="0"),
             ] = "0",
             device_type: Annotated[
-                Optional[Literal["iphone", "ipad", "total"]],
-                Field(description="Device filter", default=None),
+                Optional[Literal["iphone", "ipad"]],
+                Field(description="Device filter. Omit for all devices combined.", default=None),
             ] = None,
             limit: Annotated[
                 int,
